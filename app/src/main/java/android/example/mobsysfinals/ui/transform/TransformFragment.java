@@ -1,5 +1,6 @@
 package android.example.mobsysfinals.ui.transform;
 
+import android.example.mobsysfinals.ItemViewModel;
 import android.example.mobsysfinals.Items;
 import android.example.mobsysfinals.TransactionAdapter;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.example.mobsysfinals.Items;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,42 +38,36 @@ import java.util.List;
 public class TransformFragment extends Fragment {
 
     private FragmentTransformBinding binding;
+    private ItemViewModel itemViewModel;
+    private TransactionAdapter adapter;
+    private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_transform, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerview_transform);
-
-        List<Items> items = new ArrayList<Items>();
-        items.add(new Items("#1", R.drawable.avatar_1));
-        items.add(new Items("#2", R.drawable.avatar_10));
-        items.add(new Items("#3", R.drawable.avatar_14));
-        items.add(new Items("#4", R.drawable.avatar_8));
-        items.add(new Items("#5", R.drawable.avatar_12));
-        items.add(new Items("#6", R.drawable.avatar_13));
-        items.add(new Items("#7", R.drawable.avatar_4));
-        items.add(new Items("#1", R.drawable.avatar_1));
-        items.add(new Items("#2", R.drawable.avatar_10));
-        items.add(new Items("#3", R.drawable.avatar_14));
-        items.add(new Items("#4", R.drawable.avatar_8));
-        items.add(new Items("#5", R.drawable.avatar_12));
-        items.add(new Items("#6", R.drawable.avatar_13));
-        items.add(new Items("#7", R.drawable.avatar_4));
-        items.add(new Items("#1", R.drawable.avatar_1));
-        items.add(new Items("#2", R.drawable.avatar_10));
-        items.add(new Items("#3", R.drawable.avatar_14));
-        items.add(new Items("#4", R.drawable.avatar_8));
-        items.add(new Items("#5", R.drawable.avatar_12));
-        items.add(new Items("#6", R.drawable.avatar_13));
-        items.add(new Items("#7", R.drawable.avatar_4));
-
+        recyclerView = view.findViewById(R.id.recyclerview_transform);
+        adapter = new TransactionAdapter(getContext(), new ArrayList<>());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new TransactionAdapter(getContext(), items));
+        recyclerView.setAdapter(adapter);
 
+        itemViewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+        itemViewModel.getItemList().observe(getViewLifecycleOwner(), new Observer<List<Items>>() {
+            @Override
+            public void onChanged(List<Items> items) {
+                adapter.setItems(items);
+            }
+        });
 
         return view;
+    }
+
+    public void updateRecyclerView(List<Items> items) {
+        TransactionAdapter adapter = (TransactionAdapter) recyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.setItems(items);
+        }
     }
 
     @Override

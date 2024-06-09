@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarMain.toolbar);
         if (binding.appBarMain.fab != null) {
             binding.appBarMain.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).setAnchorView(R.id.fab).show());
@@ -44,17 +43,18 @@ public class MainActivity extends AppCompatActivity {
                     R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_settings)
                     .setOpenableLayout(binding.drawerLayout)
                     .build();
-            NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(navigationView, navController);
         }
 
         BottomNavigationView bottomNavigationView = binding.appBarMain.contentMain.bottomNavView;
         if (bottomNavigationView != null) {
             mAppBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow)
+                    R.id.nav_slideshow, R.id.nav_transform, R.id.nav_reflow)
                     .build();
-            NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+            // Set the selected item to be the SlideshowFragment
+            bottomNavigationView.setSelectedItemId(R.id.nav_slideshow);
         }
     }
 

@@ -8,6 +8,16 @@
     android:orientation="vertical"
     tools:context=".ui.transform.TransformFragment" >
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/black"
+        android:text="Order History" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_transform"
         android:layout_width="match_parent"

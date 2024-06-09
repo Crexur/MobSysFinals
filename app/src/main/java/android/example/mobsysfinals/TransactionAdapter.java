@@ -11,8 +11,8 @@ import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionFragmentViewHolder> {
 
-    Context context;
-    List<Items> items;
+    private Context context;
+    private List<Items> items;
 
     public TransactionAdapter(Context context, List<Items> items) {
         this.context = context;
@@ -27,12 +27,25 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionFragment
 
     @Override
     public void onBindViewHolder(@NonNull TransactionFragmentViewHolder holder, int position) {
-        holder.transaction.setText(items.get(position).getTransactionId());
-        holder.person_image.setImageResource(items.get(position).getImage());
+        Items item = items.get(position);
+        if (item != null) {
+            holder.transaction.setText(item.getTransactionId());
+            holder.amount.setText(item.getAmount());
+            holder.person_image.setImageResource(item.getImage());
+        } else {
+            holder.transaction.setText("");
+            holder.amount.setText("");
+            holder.person_image.setImageResource(0);
+        }
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public void setItems(List<Items> items) {
+        this.items = items;
+        notifyDataSetChanged();
     }
 }

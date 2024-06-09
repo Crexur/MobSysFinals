@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class TransactionFragmentViewHolder extends RecyclerView.ViewHolder {
 
     ImageView person_image;
-    TextView transaction;
+    TextView transaction, amount;
 
     public TransactionFragmentViewHolder(@NonNull View itemView) {
         super(itemView);
         person_image = itemView.findViewById(R.id.person_image);
         transaction = itemView.findViewById(R.id.transaction);
+        amount = itemView.findViewById(R.id.amount);
     }
 }

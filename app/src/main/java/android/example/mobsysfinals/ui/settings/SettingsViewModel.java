@@ -6,14 +6,19 @@ import androidx.lifecycle.ViewModel;
 
 public class SettingsViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<Integer> amountValue;
 
     public SettingsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is settings fragment");
+        amountValue = new MutableLiveData<>();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<Integer> getAmountValue() {
+        return amountValue;
     }
+
+    public void setAmountValue(int amount) {
+        amountValue.setValue(amount);
+    }
+
+
 }
