@@ -1,4 +1,7 @@
 <resources>
+    <dimen name="tablet_size">29sp</dimen>
+    <dimen name="mobile_size">16sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fragment_horizontal_margin">16dp</dimen>
     <dimen name="item_transform_image_length">48dp</dimen>

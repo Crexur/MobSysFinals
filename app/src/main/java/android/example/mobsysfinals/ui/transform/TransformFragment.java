@@ -1,17 +1,21 @@
 package android.example.mobsysfinals.ui.transform;
 
+import android.example.mobsysfinals.Items;
+import android.example.mobsysfinals.TransactionAdapter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.example.mobsysfinals.TransactionAdapter;
+import android.example.mobsysfinals.Items;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +23,7 @@ import android.example.mobsysfinals.R;
 import android.example.mobsysfinals.databinding.FragmentTransformBinding;
 import android.example.mobsysfinals.databinding.ItemTransformBinding;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,17 +39,39 @@ public class TransformFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        TransformViewModel transformViewModel =
-                new ViewModelProvider(this).get(TransformViewModel.class);
 
-        binding = FragmentTransformBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        View view = inflater.inflate(R.layout.fragment_transform, container, false);
 
-        RecyclerView recyclerView = binding.recyclerviewTransform;
-        ListAdapter<String, TransformViewHolder> adapter = new TransformAdapter();
-        recyclerView.setAdapter(adapter);
-        transformViewModel.getTexts().observe(getViewLifecycleOwner(), adapter::submitList);
-        return root;
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerview_transform);
+
+        List<Items> items = new ArrayList<Items>();
+        items.add(new Items("#1", R.drawable.avatar_1));
+        items.add(new Items("#2", R.drawable.avatar_10));
+        items.add(new Items("#3", R.drawable.avatar_14));
+        items.add(new Items("#4", R.drawable.avatar_8));
+        items.add(new Items("#5", R.drawable.avatar_12));
+        items.add(new Items("#6", R.drawable.avatar_13));
+        items.add(new Items("#7", R.drawable.avatar_4));
+        items.add(new Items("#1", R.drawable.avatar_1));
+        items.add(new Items("#2", R.drawable.avatar_10));
+        items.add(new Items("#3", R.drawable.avatar_14));
+        items.add(new Items("#4", R.drawable.avatar_8));
+        items.add(new Items("#5", R.drawable.avatar_12));
+        items.add(new Items("#6", R.drawable.avatar_13));
+        items.add(new Items("#7", R.drawable.avatar_4));
+        items.add(new Items("#1", R.drawable.avatar_1));
+        items.add(new Items("#2", R.drawable.avatar_10));
+        items.add(new Items("#3", R.drawable.avatar_14));
+        items.add(new Items("#4", R.drawable.avatar_8));
+        items.add(new Items("#5", R.drawable.avatar_12));
+        items.add(new Items("#6", R.drawable.avatar_13));
+        items.add(new Items("#7", R.drawable.avatar_4));
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new TransactionAdapter(getContext(), items));
+
+
+        return view;
     }
 
     @Override
@@ -53,66 +80,5 @@ public class TransformFragment extends Fragment {
         binding = null;
     }
 
-    private static class TransformAdapter extends ListAdapter<String, TransformViewHolder> {
 
-        private final List<Integer> drawables = Arrays.asList(
-                R.drawable.avatar_1,
-                R.drawable.avatar_2,
-                R.drawable.avatar_3,
-                R.drawable.avatar_4,
-                R.drawable.avatar_5,
-                R.drawable.avatar_6,
-                R.drawable.avatar_7,
-                R.drawable.avatar_8,
-                R.drawable.avatar_9,
-                R.drawable.avatar_10,
-                R.drawable.avatar_11,
-                R.drawable.avatar_12,
-                R.drawable.avatar_13,
-                R.drawable.avatar_14,
-                R.drawable.avatar_15,
-                R.drawable.avatar_16);
-
-        protected TransformAdapter() {
-            super(new DiffUtil.ItemCallback<String>() {
-                @Override
-                public boolean areItemsTheSame(@NonNull String oldItem, @NonNull String newItem) {
-                    return oldItem.equals(newItem);
-                }
-
-                @Override
-                public boolean areContentsTheSame(@NonNull String oldItem, @NonNull String newItem) {
-                    return oldItem.equals(newItem);
-                }
-            });
-        }
-
-        @NonNull
-        @Override
-        public TransformViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            ItemTransformBinding binding = ItemTransformBinding.inflate(LayoutInflater.from(parent.getContext()));
-            return new TransformViewHolder(binding);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull TransformViewHolder holder, int position) {
-            holder.textView.setText(getItem(position));
-            holder.imageView.setImageDrawable(
-                    ResourcesCompat.getDrawable(holder.imageView.getResources(),
-                            drawables.get(position),
-                            null));
-        }
-    }
-
-    private static class TransformViewHolder extends RecyclerView.ViewHolder {
-
-        private final ImageView imageView;
-        private final TextView textView;
-
-        public TransformViewHolder(ItemTransformBinding binding) {
-            super(binding.getRoot());
-            imageView = binding.imageViewItemTransform;
-            textView = binding.textViewItemTransform;
-        }
-    }
 }
